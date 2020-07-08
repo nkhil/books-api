@@ -6,8 +6,6 @@ function getBooks(req, res) {
 
 async function addBook(req, res) {
   try {
-    console.log('====Add book function\n');
-    console.log('req.body ===\n', req.body);
     await model.addBook(req.body);
     res.status(201).send();
   } catch (err) {
@@ -15,7 +13,18 @@ async function addBook(req, res) {
   }
 }
 
+async function addBooks(req, res) {
+  try {
+    await model.addBooks(req.body);
+    res.status(201).send();
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    throw err;
+  }
+}
+
 module.exports = {
   getBooks,
   addBook,
+  addBooks,
 };

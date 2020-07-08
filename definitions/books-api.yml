@@ -33,8 +33,8 @@ paths:
           $ref: '#/components/responses/500'
     post:
       description: Add books
-      operationId: addBook
-      x-eov-operation-id: addBook
+      operationId: addBooks
+      x-eov-operation-id: addBooks
       x-eov-operation-handler: books
       requestBody:
         description: Optional description in *Markdown*
@@ -114,6 +114,10 @@ components:
   schemas:
     postBookBody:
       description: Post body to create a new book in the database
+      type: array
+      items:
+        $ref: '#/components/schemas/book'
+    book:
       type: object
       required:
         - name
