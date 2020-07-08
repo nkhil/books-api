@@ -1,21 +1,6 @@
 const Model = require('./model/books');
 
-async function addBook(book) {
-  try {
-    const newBook = new Model(book);
-    newBook.save((err, savedBook) => {
-      if (err) return console.error(err);
-      console.log(`${savedBook.name} saved to bookstore collection.`);
-    });
-  } catch (err) {
-    console.log('There was an error');
-    console.log(`Error: ${err}`);
-    throw err;
-  }
-}
-
 async function addBooks(books) {
-  console.log('addBooks -> books', books);
   try {
     return await Model.insertMany(books);
   } catch (err) {
@@ -33,8 +18,27 @@ async function getBooks() {
   }
 }
 
+async function getSingleBook(id) {
+  try {
+    return await Model.findById(id);
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    throw err;
+  }
+}
+
+async function deleteSingleBook(bookId) {
+  try {
+    await Model.findOneAndDelete({ _id: bookId });
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    throw err;
+  }
+}
+
 module.exports = {
-  addBook,
   addBooks,
   getBooks,
+  deleteSingleBook,
+  getSingleBook,
 };

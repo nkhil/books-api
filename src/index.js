@@ -15,9 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 (async function databaseInit() {
-  console.log('1. Before connection');
   await database.connect();
-  console.log('2. After connection');
 })();
 
 new OpenApiValidator({

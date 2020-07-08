@@ -10,7 +10,7 @@ async function connect() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('connected');
+    console.log('connected to database');
     mongoose.connection.on('connected', () =>
       console.log('Connected to database')
     );

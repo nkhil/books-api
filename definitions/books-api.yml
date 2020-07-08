@@ -9,6 +9,50 @@ servers:
   - url: http://staging-api.example.com
     description: Optional server description, e.g. Internal staging server for testing
 paths:
+  /books/{bookId}:
+    get:
+      description: Get single book
+      operationId: getBook
+      x-eov-operation-id: getSingleBook
+      x-eov-operation-handler: books
+      parameters:
+        - in: path
+          name: bookId
+          schema:
+            type: string
+          required: true
+          description: ID of the book to get
+      responses:
+        "200":
+          description: Success
+          $ref: "#/components/responses/getSingleBookResponse"
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
+    delete:
+      description: Delete single book
+      operationId: deleteBook
+      x-eov-operation-id: deleteSingleBook
+      x-eov-operation-handler: books
+      parameters:
+        - in: path
+          name: bookId
+          schema:
+            type: string
+          required: true
+          description: ID of the book to delete
+      responses:
+        "204":
+          description: Success No Content
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
   /books:
     get:
       description: Returns books
@@ -16,7 +60,7 @@ paths:
       x-eov-operation-id: getBooks
       x-eov-operation-handler: books
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
@@ -25,12 +69,12 @@ paths:
                   message:
                     type: string
                     example: OK
-        '401':
-          $ref: '#/components/responses/401'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
     post:
       description: Add books
       operationId: addBooks
@@ -42,16 +86,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/postBookBody'
+              $ref: "#/components/schemas/postBookBody"
       responses:
-        '201':
+        "201":
           description: Success
-        '401':
-          $ref: '#/components/responses/401'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
   /healthcheck/ping:
     get:
       description: Returns the readiness of the service
@@ -59,9 +103,9 @@ paths:
       x-eov-operation-id: ping
       x-eov-operation-handler: healthcheck
       parameters:
-        - $ref: '#/components/parameters/x-correlation-id'
+        - $ref: "#/components/parameters/x-correlation-id"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -70,38 +114,45 @@ paths:
                   message:
                     type: string
                     example: OK
-        '401':
-          $ref: '#/components/responses/401'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
 components:
   responses:
-    '401':
+    "401":
       description: Unauthorised Error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UnauthorisedError'
-    '404':
+            $ref: "#/components/schemas/UnauthorisedError"
+    "404":
       description: Not Found Error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/NotFoundError'
-    '500':
+            $ref: "#/components/schemas/NotFoundError"
+    "500":
       description: Server Error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/InternalServerError'
+            $ref: "#/components/schemas/InternalServerError"
+    getSingleBookResponse:
+      description: Get single book response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/book"
+      $ref: "#/components/schemas/book"
     default:
       description: Invalid Request Error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/InvalidRequestError'
+            $ref: "#/components/schemas/InvalidRequestError"
   parameters:
     x-correlation-id:
       name: x-correlation-id
@@ -112,11 +163,17 @@ components:
         type: string
         format: uuid
   schemas:
+    deleteBooksRequestBody:
+      description: Delete request body
+      type: array
+      items:
+        type: string
+        example: 5f05d025eab386302483a3bd
     postBookBody:
       description: Post body to create a new book in the database
       type: array
       items:
-        $ref: '#/components/schemas/book'
+        $ref: "#/components/schemas/book"
     book:
       type: object
       required:
