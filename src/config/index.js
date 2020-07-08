@@ -6,5 +6,6 @@ module.exports = {
   mongo: {
     password: process.env.MONGO_PASSWORD,
     dbName: process.env.MONGO_DB_NAME,
-  }
+    maxLimit: 100,
+  },
 };

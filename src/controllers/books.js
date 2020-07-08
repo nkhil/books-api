@@ -1,7 +1,9 @@
 const model = require('../lib/database/utils');
 
-function getBooks(req, res) {
-  res.status(200).json({ status: 'OK' });
+async function getBooks(req, res) {
+  const books = await model.getBooks();
+  console.log('getBooks -> books', books);
+  res.status(200).json(books);
 }
 
 async function addBook(req, res) {

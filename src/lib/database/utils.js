@@ -24,7 +24,17 @@ async function addBooks(books) {
   }
 }
 
+async function getBooks() {
+  try {
+    return await Model.find();
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    throw err;
+  }
+}
+
 module.exports = {
   addBook,
   addBooks,
+  getBooks,
 };
