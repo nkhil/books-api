@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const {
-  mongo: { dbName, password },
+  mongo: { connectionString },
 } = require('../../config');
 
 async function connect() {
   try {
-    const connectionString = `mongodb+srv://books-api:${password}@books.jsvhp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
     await mongoose.connect(connectionString, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
