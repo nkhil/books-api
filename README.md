@@ -14,11 +14,16 @@ docker-compose up
 
 ## Testing
 
-This service is tested using **jest**. The end-to-end (e2e) tests are tested using **supertest**. 
+This service is tested using **jest**. The end-to-end (e2e) tests are tested using **supertest**.
 
 To run the test suite, run:
 
 ```bash
-npm t
+npm test
 ```
 
+To run the e2e test suite using docker, run:
+
+```bash
+npm run dockertest
+```
