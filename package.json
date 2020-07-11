@@ -10,7 +10,8 @@
     "test": "npm run test:unit",
     "develop": "nodemon src/index.js",
     "test:unit": "NODE_ENV=test jest --testRegex 'test/.+\\.test\\.js$' --forceExit --coverage --detectOpenHandles",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "dockertest": "bash dockertest.sh"
   },
   "keywords": [],
   "author": "",

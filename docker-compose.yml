@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   mongo:
@@ -9,5 +9,7 @@ services:
     build: .
     ports:
       - 8080:8080
+    image: app
+    container_name: app
     environment:
       MONGO_CONNECTION_STRING: mongodb://mongo/booksdb?retryWrites=true&w=majority
