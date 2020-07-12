@@ -11,7 +11,7 @@
     "develop": "nodemon src/index.js",
     "test:unit": "NODE_ENV=test jest --testRegex 'test/.+\\.test\\.js$' --forceExit --coverage --detectOpenHandles",
     "test:watch": "jest --watch",
-    "dockertest": "bash dockertest.sh"
+    "test:docker": "bash dockertest.sh"
   },
   "keywords": [],
   "author": "",
