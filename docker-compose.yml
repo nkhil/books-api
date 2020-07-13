@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
   mongo:
@@ -7,11 +7,29 @@ services:
       - 27017:27017
     volumes:
       - ./data:/data/db
+    expose:
+      - 27017
   app:
-    build: .
+    build:
+      context: .
+      target: production # refers to step in Dockerfile (multi-stage build)
     ports:
       - 8080:8080
     image: app
     container_name: app
+    depends_on:
+      - mongo
     environment:
       MONGO_CONNECTION_STRING: mongodb://mongo/booksdb?retryWrites=true&w=majority
+  test:
+    build:
+      context: .
+      target: test
+    depends_on:
+      - mongo
+      - app
+    environment:
+      MONGO_CONNECTION_STRING: mongodb://mongo/booksdb?retryWrites=true&w=majority
+    command: npm test
+    volumes:
+      - ./:/app
