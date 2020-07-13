@@ -12,18 +12,19 @@ cd books-api
 docker-compose up
 ```
 
-## Testing
+## Tests
 
 This service is tested using **jest**. The end-to-end (e2e) tests are tested using **supertest**.
 
-To run the test suite, run:
+### To run the test suite, run:
 
 ```bash
-npm test
+npm test:docker 
+# This will spin up a mongoDB and an app container to run the tests against
 ```
 
-To run the e2e test suite using docker, run:
+### To run the test locally (without Docker):
 
-```bash
-npm run dockertest
-```
+1. Modify the the value of `mongo.connectionString` (in `./src/config/index.js`) to `mongodb://localhost/booksDb`
+2. Start a mongo server on your localhost. By default this will run on `localhost:27017/mongo` 
+3. Run the tests using `npm test`
