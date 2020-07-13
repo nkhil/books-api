@@ -7,11 +7,10 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "test": "npm run test:unit",
+    "test": "NODE_ENV=test jest --testRegex 'test/.+\\.test\\.js$' --forceExit --coverage --detectOpenHandles",
     "develop": "nodemon src/index.js",
-    "test:unit": "NODE_ENV=test jest --testRegex 'test/.+\\.test\\.js$' --forceExit --coverage --detectOpenHandles",
     "test:watch": "jest --watch",
-    "test:docker": "bash dockertest.sh"
+    "test:docker": "docker-compose up --build test"
   },
   "keywords": [],
   "author": "",
