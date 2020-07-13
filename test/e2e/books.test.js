@@ -1,21 +1,30 @@
 const supertest = require('supertest');
-const mongoose = require('mongoose');
+const BookModel = require('../../src/lib/database/model/books');
 const app = require('../../src/app');
 const { createBooks } = require('../helpers/books');
 
-let api;
+describe('Books API', () => {
+  let api;
 
-beforeAll(async () => {
-  api = supertest(app);
-  // await mongoose.connection.db.dropCollection('books');
-});
+  beforeAll(async () => {
+    jest.setTimeout(30000);
+    api = supertest(app);
+    await BookModel.deleteMany({}, err => {
+      if (err) {
+        throw err;
+      }
+    });
+  });
 
-afterEach(async () => {
-  await mongoose.connection.db.dropCollection('books');
-});
+  afterEach(async () => {
+    await BookModel.deleteMany({}, err => {
+      if (err) {
+        throw err;
+      }
+    });
+  });
 
-describe('POST /books', () => {
-  it('is capable of posting new books', async done => {
+  it('can create new books in the DB', async () => {
     const books = createBooks(5);
     const postResponse = await api
       .post('/books')
@@ -25,10 +34,9 @@ describe('POST /books', () => {
     expect(postResponse.status).toBe(201);
     expect(booksInDb.status).toBe(200);
     expect(booksInDb.body.length).toBe(5);
-    done();
   });
 
-  it('returns the correct payload', async done => {
+  it('can read all books in the DB', async () => {
     const books = createBooks(5);
     const postResponse = await api
       .post('/books')
@@ -38,6 +46,5 @@ describe('POST /books', () => {
     expect(postResponse.status).toBe(201);
     expect(response.status).toBe(200);
     expect(response.body.length).toBe(5);
-    done();
   });
 });
